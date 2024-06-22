@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
@@ -47,55 +46,4 @@ export class PokemonService {
       .findByIdAndUpdate(id, updateData, { new: true })
       .exec();
   }
-=======
-import { Injectable, HttpService, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Pokemon } from './pokemon.entity';
-import { firstValueFrom } from 'rxjs';
-
-@Injectable()
-export class PokemonService {
-    constructor(
-        @InjectRepository(Pokemon)
-        private readonly pokemonRepository: Repository<Pokemon>,
-        private readonly httpService: HttpService,
-    ) { }
-
-    async fetchAndSavePokemons() {
-        const response = await firstValueFrom(
-            this.httpService.get('https://pokeapi.co/api/v2/pokemon?limit=50')
-        );
-        const pokemons = response.data.results;
-
-        for (const pokemon of pokemons) {
-            const newPokemon = this.pokemonRepository.create(pokemon);
-            await this.pokemonRepository.save(newPokemon);
-        }
-    }
-
-    findAll() {
-        return this.pokemonRepository.find();
-    }
-
-    async findOne(id: number) {
-        const pokemon = await this.pokemonRepository.findOneBy({ id });
-        if (!pokemon) {
-            throw new NotFoundException(`Pokemon with ID ${id} not found`);
-        }
-        return pokemon;
-    }
-
-    async remove(id: number): Promise<void> {
-        const result = await this.pokemonRepository.delete(id);
-        if (result.affected === 0) {
-            throw new NotFoundException(`Pokemon with ID ${id} not found`);
-        }
-    }
-
-    async update(id: number, updateData: Partial<Pokemon>): Promise<Pokemon> {
-        await this.pokemonRepository.update(id, updateData);
-        return this.findOne(id);
-    }
->>>>>>> 2acd11f3402582334d61efa4f9d833378d8c43bb
 }
