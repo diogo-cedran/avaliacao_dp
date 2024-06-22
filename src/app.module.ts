@@ -1,17 +1,18 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { PokemonModule } from "./pokemon/pokemon.module";
-import { UsersModule } from "./users/users.module";
-import { AuthModule } from "./auth/auth.module";
-import { LogsModule } from "./logs/logs.module";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { PokemonModule } from './pokemon/pokemon.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb://localhost/API-Pokemon"), // Conexão com MongoDB
-    PokemonModule,
-    UsersModule,
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot('mongodb://localhost/API-Pokemon'), //Conexão com MongoDB
     AuthModule,
-    LogsModule,
+    UsersModule,
+    PokemonModule,
   ],
 })
 export class AppModule {}
+
