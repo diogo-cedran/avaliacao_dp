@@ -1,17 +1,16 @@
-// src/logs/logs.service.ts
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Log } from './log.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Log } from './logs.schema';
 
 @Injectable()
 export class LogsService {
   constructor(
-    @InjectRepository(Log)
-    private readonly logRepository: Repository<Log>,
+    @InjectModel(Log.name) private readonly logModel: Model<Log>,
   ) {}
 
   async create(log: Log): Promise<Log> {
-    return this.logRepository.save(log);
+    const createdLog = new this.logModel(log);
+    return createdLog.save();
   }
 }

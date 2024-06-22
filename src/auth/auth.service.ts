@@ -1,8 +1,7 @@
-// src/auth/auth.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/user.entity';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -14,6 +13,9 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findByUsername(username);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
     if (user && await bcrypt.compare(pass, user.password)) {
       const { password, ...result } = user;
       return result;
@@ -28,9 +30,9 @@ export class AuthService {
     };
   }
 
-  async register(user: User) {
+  async register(createUserDto: CreateUserDto) {
     const salt = await bcrypt.genSalt();
-    user.password = await bcrypt.hash(user.password, salt);
-    return this.usersService.create(user);
+    createUserDto.password = await bcrypt.hash(createUserDto.password, salt);
+    return this.usersService.create(createUserDto);
   }
 }

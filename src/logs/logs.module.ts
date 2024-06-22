@@ -1,12 +1,13 @@
-// src/logs/logs.module.ts
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Log } from './log.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Log, LogSchema } from './logs.schema';
 import { LogsService } from './logs.service';
 import { LogsMiddleware } from './logs.middleware';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Log])],
+  imports: [
+    MongooseModule.forFeature([{ name: Log.name, schema: LogSchema }])
+  ],
   providers: [LogsService],
 })
 export class LogsModule implements NestModule {

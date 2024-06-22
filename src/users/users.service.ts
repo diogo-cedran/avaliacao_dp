@@ -1,38 +1,41 @@
-// src/users/users.service.ts
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { Injectable, NotFoundException } from '@nestjs/common'; // Adicione NotFoundException aqui
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from './users.schema';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async create(user: User): Promise<User> {
-    return this.userRepository.save(user);
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = new this.userModel(createUserDto);
+    return user.save();
   }
 
   async findByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { username } });
+    return this.userModel.findOne({ username }).exec();
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(): Promise<User[]> {
+    return this.userModel.find().exec();
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOneBy({ id });
+  async findOne(id: string): Promise<User> {  // ID como string
+    return this.userModel.findById(id).exec();
   }
 
-  async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
+  async remove(id: string): Promise<void> {  // ID como string
+    const result = await this.userModel.deleteOne({ _id: id }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
   }
 
-  async update(id: number, updateData: Partial<User>): Promise<User> {
-    await this.userRepository.update(id, updateData);
-    return this.findOne(id);
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {  // ID como string
+    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
   }
 }

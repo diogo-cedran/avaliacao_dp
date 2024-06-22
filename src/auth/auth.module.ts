@@ -1,21 +1,20 @@
-// src/auth/auth.module.ts
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from '../users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
-import { User } from '../users/user.entity';
+import { User, UserSchema } from '../users/users.schema';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: 'yourSecretKey', // Use um segredo mais forte e armazene-o em variáveis de ambiente em produção
+      secret: process.env.JWT_SECRET || 'defaultSecret',
       signOptions: { expiresIn: '60m' },
     }),
   ],

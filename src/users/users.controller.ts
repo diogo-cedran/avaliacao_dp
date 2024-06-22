@@ -1,15 +1,15 @@
-// src/users/users.controller.ts
 import { Controller, Get, Post, Param, Delete, Body, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() user: User) {
-    return this.usersService.create(user);
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @Get()
@@ -18,17 +18,17 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {  // ID como string
     return this.usersService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {  // ID como string
     return this.usersService.remove(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateData: Partial<User>) {
-    return this.usersService.update(id, updateData);
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {  // ID como string
+    return this.usersService.update(id, updateUserDto);
   }
 }
