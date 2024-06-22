@@ -7,7 +7,7 @@ import { LogsModule } from "./logs/logs.module";
 
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb://localhost/pokemon"), // Conexão com MongoDB
+    MongooseModule.forRoot("mongodb://localhost/API-Pokemon"), // Conexão com MongoDB
     PokemonModule,
     UsersModule,
     AuthModule,

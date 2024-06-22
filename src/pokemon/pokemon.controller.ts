@@ -46,4 +46,11 @@ export class PokemonController {
   update(@Param("id") id: string, @Body() updateData: UpdatePokemonDto) {
     return this.pokemonService.update(id, updateData);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(@Body() createPokemonDto: CreatePokemonDto) {
+    return this.pokemonService.create(createPokemonDto);
+  }
+
 }

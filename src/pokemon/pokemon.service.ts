@@ -14,6 +14,11 @@ export class PokemonService {
     private readonly httpService: HttpService
   ) {}
 
+  async create(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {
+    const createdPokemon = new this.pokemonModel(createPokemonDto);
+    return createdPokemon.save();
+  }
+  
   async fetchAndSavePokemons() {
     const response: { data: { results: Pokemon[] } } = await firstValueFrom(
       this.httpService.get("https://pokeapi.co/api/v2/pokemon?limit=50")
