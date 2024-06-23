@@ -8,7 +8,7 @@
 
 
 # Introdução
-Este trabalho tem como objetivo desenvolver uma aplicação utilizando NestJS para gerenciar usuários e pokémons, integrando autenticação JWT e operações CRUD. O projeto foi elaborado para cumprir os requisitos propostos, utilizando a API pública PokeAPI(https://pokeapi.co/) para obtenção de dados sobre pokémons. A aplicação foi desenvolvida utilizando as seguintes ferramentas:
+Este trabalho tem como objetivo desenvolver uma aplicação utilizando NestJS para gerenciar usuários, pokémons e logs de requisição integrando autenticação JWT e operações CRUD. O projeto foi elaborado para cumprir os requisitos propostos, utilizando a API pública PokeAPI(https://pokeapi.co/) para obtenção de dados sobre pokémons. A aplicação foi desenvolvida utilizando as seguintes ferramentas:
 * Node.js: Plataforma de desenvolvimento em JavaScript para back-end.
 * NestJS: Framework para construção de aplicações Node.js escaláveis e eficientes.
 * MongoDB: Banco de dados NoSQL utilizado para armazenar dados dos usuários e pokémons.
