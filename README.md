@@ -70,6 +70,7 @@ Para executar o ambiente Docker, use o comando: docker-compose up
 # Execução
 Iniciar o Servidor
 Para iniciar o servidor, execute o seguinte comando: npm run start
+
 Ou, se estiver usando Docker: docker-compose up
 
 # Funcionalidades Implementadas
