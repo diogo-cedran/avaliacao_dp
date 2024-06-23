@@ -143,23 +143,23 @@ Testes de Carga
 # Execução dos Testes
 Para executar os testes, use os seguintes comandos:
 
-Testes de integração
+Testes de integração: 
 npm run test:integration
 
-Testes E2E
+Testes E2E: 
 npm run test:e2e
 
-Testes de carga
+Testes de carga: 
 npm run test:load
 
 # Fluxo de Autenticação
 Registro
-1 -  usuário envia uma solicitação POST /auth/register com os dados de registro.
+1 - Usuário envia uma solicitação POST /auth/register com os dados de registro.
 2 - A senha é criptografada e o usuário é salvo no banco de dados.
 3 - Um token JWT é gerado e retornado ao usuário.
 
 Login
-1 - usuário envia uma solicitação POST /auth/login com suas credenciais.
+1 - Usuário envia uma solicitação POST /auth/login com suas credenciais.
 2 - As credenciais são validadas e, se corretas, um token JWT é gerado e retornado ao usuário.
 
 Acesso a Rotas Protegidas
