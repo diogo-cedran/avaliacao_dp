@@ -31,6 +31,7 @@ Utilizando a API que escolheu, desenvolva uma aplicação utilizando NestJS com 
 # Instalação de Dependências
 Para instalar todas as dependências necessárias, execute os seguintes comandos:
 npm install @nestjs/common @nestjs/core @nestjs/mongoose @nestjs/jwt @nestjs/passport @nestjs/config mongoose passport passport-jwt passport-local bcrypt @nestjs/axios rxjs
+
 npm install --save-dev @types/passport-local @types/bcrypt
 
 
